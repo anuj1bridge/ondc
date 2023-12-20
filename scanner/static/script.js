@@ -1,0 +1,25 @@
+function domReady(fn) { 
+	if ( 
+		document.readyState === "complete" || 
+		document.readyState === "interactive"
+	) { 
+		setTimeout(fn, 1000); 
+	} else { 
+		document.addEventListener("DOMContentLoaded", fn); 
+	} 
+} 
+
+domReady(function () { 
+
+	// If found you qr code 
+	function onScanSuccess(decodeText, decodeResult) { 
+		// alert("You Qr is : " + decodeText, decodeResult); 
+    window.location.replace("http://127.0.0.1:8000/send-to-shopify?text="+decodeText);
+	} 
+
+	let htmlscanner = new Html5QrcodeScanner( 
+		"my-qr-reader", 
+		{ fps: 10, qrbos: 250 } 
+	); 
+	htmlscanner.render(onScanSuccess); 
+});
